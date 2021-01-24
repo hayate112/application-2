@@ -1,0 +1,56 @@
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-3">
+      <h2>User info</h2>
+      <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %>
+      <table class="table">
+        <tbody>
+          <tr></tr>
+          <tr>
+          	 <th>name</th>
+          	 <th><%= @user.name %></th>
+          </tr>
+          <tr>
+          	 <th>introduction</th>
+          	 <th><%= @user.introduction %></th>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <%= link_to '',edit_user_path(@user), class: "btn btn-outline-secondary btn-block fas fa-user-cog" %>
+      </div>
+      <h2 class="mt-3">New book</h2>
+      <% if @book.errors.any? %>
+        <%= @book.errors.count %>errors prohibited this obj from being saved:
+        <% @book.errors.full_messages.each do |message| %>
+          <%= message %>
+        <% end %>
+      <% end %>
+      <%= form_with model: @book, local:true do |f| %>
+        <h4>Title</h4>
+        <%= f.text_field :title %>
+        <h4>Opinion</h4>
+        <%= f.text_area :body %>
+        <%= f.submit 'Create Book', class: "btn btn-success" %>
+      <% end %>
+    </div>
+    
+    <div class="col-md-8 offset-md-1">
+      <table class="table table-hover table-inverse">
+        <h1>Users</h1>
+        <tr>
+          <th>image</th>
+          <th>name</th>
+          <th></th>
+        </tr>
+        <% @users.each do |user| %>
+        <tr>
+          <td><%= attachment_image_tag user, :profile_image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size: "40x40" %></td>
+          <td><%= user.name %></td>
+          <td><%= link_to "Show", user_path(user.id) %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
